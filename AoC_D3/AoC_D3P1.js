@@ -12,11 +12,11 @@ if (!debug) {
     input = `xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))`;    
 }
 
-
+// regex to match the command
 const regex = /mul\((\d+),(\d+)\)/g;
 const output = [...input.matchAll(regex)];
 
-
+// reduce with the captured numbers
 let finalNumber = output.reduce((acc, value, index) => {
     return acc + (output[index][1] * output[index][2]);
 }, 0);
