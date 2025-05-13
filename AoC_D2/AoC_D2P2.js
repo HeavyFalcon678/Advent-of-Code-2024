@@ -27,6 +27,7 @@ const finalNumber = input.reduce((total, val) => {
     const numbers = val.split(/\s/);
 
     let failed = false;
+    let dampened = false;
     let increasing = null;
 
     // Go through each number
@@ -42,11 +43,11 @@ const finalNumber = input.reduce((total, val) => {
         // Check if it's still increasing or decreasing
         if ((increasing && (firstNum >= secondNum)) || (increasing == false && (firstNum <= secondNum))) {
             // if not then it fails
-            failed = true;
+            dampened == false ? dampened = true : failed = true;
         }
 
         // Check if they differ by 4 or more, if not then it fails
-        Math.abs(firstNum - secondNum) > 3 && (failed = true);
+        Math.abs(firstNum - secondNum) > 3 && (dampened == false ? dampened = true : failed = true);
     }
 
     // Add to total if it passes
