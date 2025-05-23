@@ -2,7 +2,7 @@
 const fs = require("node:fs");
 
 // test with example input 
-const debug = true;
+const debug = false;
 let input;
 
 // Get the input; if in debug mode use example input, else use the actual input
@@ -39,6 +39,47 @@ if (!debug) {
 97,13,75,29,47`;
 }
 
-
+// Split the input up into usable form
 input = input.split("\n\n");
-console.log(input[0]);
+rules = input[0].split("\n");
+
+splitRules = [];
+
+rules.forEach(element => {
+    splitRules.push(element.split("|"));
+});
+
+pages = input[1].split("\n");
+
+
+// Initialize some counter variables
+let passedPages = []
+let finalNumber = 0;
+
+// Go through each page
+pages.forEach(page => {
+    let failed = false;
+    // in each page go through each rule
+    splitRules.forEach((rule) => {
+        // get the indexes that the rules are in
+        let pos1 = page.indexOf(rule[0]);
+        let pos2 = page.indexOf(rule[1]);
+
+        // if the rule applies to this page
+        if (pos1 > -1 && pos2 > -1) {
+            // if the rule fails then update accordingly
+            pos1 > pos2 && (failed = true);
+        }
+    });
+    // if it passed all tests add the page to the list
+    failed == false && passedPages.push(page);
+});
+
+// goes through each page and adds the middle number to the final count
+passedPages.forEach((passedPage) => {
+    passedPage = passedPage.split(",");
+    let index = passedPage.length / 2 - .5;
+    finalNumber += +passedPage[index];
+});
+
+console.log(finalNumber);
